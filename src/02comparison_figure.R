@@ -16,9 +16,9 @@ levels(rvm_data$treatment)
 
 # box plot on gsh levels
 g_gsh_box <- ggplot(aes(y=GSH_nM_mL, x=treatment), data=rvm_data) + 
-  geom_boxplot() + 
+  geom_boxplot(fill="darkolivegreen4") + 
   theme_bw() +
-  labs(x = "", y="GSH")
+  labs(x = "Treatment", y="GSH (nM/mL)")
          
 #expression(paste("GSH (", mu, "g/g), Water (", mu, "g/mL)", sep="")))
 g_gsh_box
