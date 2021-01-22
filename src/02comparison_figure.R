@@ -1,21 +1,20 @@
-dim(rvm_data)
-colnames(rvm_data)
+#### GSH
+dim(rvm_cort)
+colnames(rvm_cort)
 # "ID"        "Z"         "L"         "N"         "treatment" "GSH_nM_mL"
 
-levels(rvm_data$treatment)
+levels(rvm_cort$treatment)
 # "C"   "L"   "LN"  "N"   "Z"   "ZL"  "ZLN" "ZN"
 
+#update order
 # "C"   "L"   "N"   "Z" "LN"     "ZL" "ZN" "ZLN" 
-levels(rvm_data$treatment) <- c("C", "L", "N", "Z", "LN", "ZL", "ZN", "ZLN")
-
-rvm_data$treatment <- factor(rvm_data$treatment , levels=c("C", "L", "N", "Z", "LN", "ZL", "ZN", "ZLN"))
-
-levels(rvm_data$treatment)
+levels(rvm_cort$treatment) <- c("C", "L", "N", "Z", "LN", "ZL", "ZN", "ZLN")
+rvm_cort$treatment <- factor(rvm_cort$treatment , levels=c("C", "L", "N", "Z", "LN", "ZL", "ZN", "ZLN"))
+levels(rvm_cort$treatment)
 # "C"   "L"   "N"   "Z"   "LN"  "ZL"  "ZN"  "ZLN"  
 
-
 # box plot on gsh levels
-g_gsh_box <- ggplot(aes(y=GSH_nM_mL, x=treatment), data=rvm_data) + 
+g_gsh_box <- ggplot(aes(y=GSH_nM_mL, x=treatment), data=rvm_cort) + 
   geom_boxplot(fill="darkolivegreen4") + 
   theme_bw() +
   labs(x = "Treatment", y="GSH (nM/mL)")
@@ -26,4 +25,71 @@ g_gsh_box
 cort_boxplot <- paste(rvm_graphics,"/rvm_gsh_by_treatment.jpg",sep="")
 jpeg(cort_boxplot, width = 8, height = 7, units = "in",res=600)
   g_gsh_box
+dev.off()
+
+### Atrazine
+dim(rvm_atrazine)
+colnames(rvm_atrazine)
+# "ID"         "Z"          "L"          "N"          "treatment"  "Frog..ppm." "Soil..ppm." "BCF" 
+
+levels(rvm_atrazine$treatment)
+# "Z"   "ZL"  "ZLN" "ZN"
+
+#update order
+# "Z"   "ZL"  "ZN" "ZLN"
+levels(rvm_atrazine$treatment) <- c("Z", "ZL", "ZN", "ZLN")
+rvm_atrazine$treatment <- factor(rvm_atrazine$treatment , levels=c("Z", "ZL", "ZN", "ZLN"))
+levels(rvm_atrazine$treatment)
+# "Z"   "ZL"  "ZN"  "ZLN"  
+
+# box plot on gsh levels
+g_atrazine_box <- ggplot(aes(y=BCF, x=treatment), data=rvm_atrazine) + 
+  geom_boxplot(fill="cornflowerblue") + 
+  theme_bw() +
+  labs(x = "Treatment", y="Atrazine BCF")
+
+#expression(paste("GSH (", mu, "g/g), Water (", mu, "g/mL)", sep="")))
+g_atrazine_box
+
+atrazine_boxplot <- paste(rvm_graphics,"/rvm_atrazine_bcf_by_treatment.jpg",sep="")
+  jpeg(atrazine_boxplot, width = 8, height = 7, units = "in",res=600)
+  g_atrazine_box
+dev.off()
+
+
+### Alachlor
+dim(rvm_alachlor)
+colnames(rvm_alachlor)
+# "ID"         "Z"          "L"          "N"          "treatment"  "Frog..ppm." "Soil..ppm." "BCF" 
+
+levels(rvm_alachlor$treatment)
+# "C"   "L"   "LN"  "N"   "Z"   "ZL"  "ZLN" "ZN"
+
+#order does not need to be updated
+ 
+# box plot on gsh levels
+g_alachlor_box <- ggplot(aes(y=BCF, x=treatment), data=rvm_alachlor) + 
+  geom_boxplot(fill="red4") + 
+  theme_bw() +
+  labs(x = "Treatment", y="Alachlor BCF")
+
+#expression(paste("GSH (", mu, "g/g), Water (", mu, "g/mL)", sep="")))
+g_alachlor_box
+
+alachlor_boxplot <- paste(rvm_graphics,"/rvm_alachlor_bcf_by_treatment.jpg",sep="")
+  jpeg(alachlor_boxplot, width = 8, height = 7, units = "in",res=600)
+  g_alachlor_box
+dev.off()
+
+# create single multiplot of all 3
+#combine and stack figures
+figure_stacked <- ggarrange(g_gsh_box, g_atrazine_box, g_alachlor_box,
+                            heights = c(2.5, 2.5, 2.5),
+                            labels = c("A", "B", "C"),
+                            ncol = 1, nrow = 3)
+figure_stacked
+
+stacked_boxplots <- paste(rvm_graphics,"/rvm_cort_bcfs_stacked_figure.jpg",sep="")
+jpeg(stacked_boxplots, width = 4, height = 7.5, units = "in",res=600)
+  figure_stacked
 dev.off()

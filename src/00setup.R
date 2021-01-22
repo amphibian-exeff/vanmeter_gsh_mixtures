@@ -31,10 +31,18 @@ rvm_graphics <- file.path(rvm_root, "graphics")
 
 #check to see if directories are accessible
 boo = file.exists(file.path(rvm_csv_in,"/gsf_data.csv"))
-print(paste("check to see if R can access files OK: ", boo))
+print(paste("check to see if R can access GSF file OK: ", boo))
 
-#cleaned up data set, manually reshaped
+boo = file.exists(file.path(rvm_csv_in,"/atrazine_data.csv"))
+print(paste("check to see if R can access atrazine file OK: ", boo))
+
+boo = file.exists(file.path(rvm_csv_in,"/alachlor_data.csv"))
+print(paste("check to see if R can access alachlor file OK: ", boo))
+
+#cleaned up data set, manually reshaped, long format
 rvm_cort <- read.csv(file.path(rvm_csv_in,"/gsf_data.csv"), stringsAsFactors = TRUE)
+rvm_atrazine <- read.csv(file.path(rvm_csv_in,"/atrazine_data.csv"), stringsAsFactors = TRUE)
+rvm_alachlor <- read.csv(file.path(rvm_csv_in,"/alachlor_data.csv"), stringsAsFactors = TRUE)
 
 summary(rvm_cort)
 colnames(rvm_cort)
