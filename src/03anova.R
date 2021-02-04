@@ -56,17 +56,17 @@ shapiro_test(residuals(rvm_cort_lm)) # Compute Shapiro-Wilk test of normality
 rvm_cort %>%
   group_by(Z, L, N) %>%
   shapiro_test(GSH_nM_mL)
-  # (hard reject normality for 2 groups, soft reject for 1 group)
+# (hard reject normality for 2 groups, soft reject for 1 group)
 
 rvm_cort_drop_extreme_outliers %>%
   group_by(Z, L, N) %>%
   shapiro_test(GSH_nM_mL)
-  # (hard reject normality for 1 groups, soft reject for 1 group)
+# (hard reject normality for 1 groups, soft reject for 1 group)
 
 rvm_cort_drop_outliers %>%
   group_by(Z, L, N) %>%
   shapiro_test(GSH_nM_mL)
-  # (hard reject normality for 1 groups)
+# (hard reject normality for 1 groups)
 
 rvm_cort %>% #logged
   group_by(Z, L, N) %>%
@@ -93,6 +93,9 @@ ggqqplot(rvm_log_cort_drop_outliers, "logGSH", ggtheme = theme_bw()) +
 rvm_cort %>% levene_test(GSH_nM_mL ~ Z*L*N)
 rvm_log_cort_drop_outliers %>% levene_test(logGSH ~ Z*L*N) #logged data with outliers dropped
 
+##########################################
+View(rvm_cort)
+
 #################################
 # aovs w and wo outliers
 three_way_aov <- aov(GSH_nM_mL ~ Z * L * N, data = rvm_cort)
@@ -108,8 +111,17 @@ summary(three_way_aov_drop_extreme_outliers)
 # logged aovs w and wo outliers
 logged_three_way_aov <- aov(logGSH ~ Z * L * N, data = rvm_cort)
 summary(logged_three_way_aov)
+#Df Sum Sq Mean Sq F value   Pr(>F)    
+#Z            1   4.25   4.248   2.518 0.120432    
+#L            1   0.60   0.598   0.354 0.555053    
+#N            1  22.20  22.197  13.156 0.000802 ***
+#  Z:L          1   6.63   6.626   3.927 0.054414 .  
+#Z:N          1   4.52   4.518   2.678 0.109612    
+#L:N          1   1.57   1.568   0.929 0.340892    
+#Z:L:N        1   0.02   0.021   0.012 0.912750    
+#Residuals   40  67.49   1.687 
 
-## this is the aov we use, logged response data with appropriat eoutliers dropped
+## this is the aov we use, logged response data with appropriate outliers dropped
 logged_three_way_aov_drop_outliers <- aov(logGSH ~ Z * L * N, data = rvm_log_cort_drop_outliers)
 summary(logged_three_way_aov_drop_outliers)
 #Df Sum Sq Mean Sq F value   Pr(>F)    

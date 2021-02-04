@@ -27,6 +27,18 @@ jpeg(cort_boxplot, width = 8, height = 7, units = "in",res=600)
   g_gsh_box
 dev.off()
 
+log_g_gsh_box <- ggplot(aes(y=GSH_nM_mL, x=treatment), data=rvm_cort) + 
+  geom_boxplot(fill="darkolivegreen4") + 
+  theme_bw() +
+  scale_y_continuous(trans='log') +
+  labs(x = "Treatment", y="GSH (nM/mL)")
+log_g_gsh_box
+
+log_cort_boxplot <- paste(rvm_graphics,"/rvm_log_gsh_by_treatment.jpg",sep="")
+jpeg(log_cort_boxplot, width = 8, height = 7, units = "in",res=600)
+  log_g_gsh_box
+dev.off()
+
 ### Atrazine
 dim(rvm_atrazine)
 colnames(rvm_atrazine)
