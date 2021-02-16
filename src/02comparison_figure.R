@@ -6,12 +6,24 @@ colnames(rvm_cort)
 levels(rvm_cort$treatment)
 # "C"   "L"   "LN"  "N"   "Z"   "ZL"  "ZLN" "ZN"
 
+# before
+ggplot(rvm_cort_before_sort, aes_string(x='treatment', y='GSH_nM_mL')) +
+  geom_point() +
+  xlab("Treatment") + ylab("Concentration") + ggtitle("GSH Levels") +
+  theme_bw()
 #update order
 # "C"   "L"   "N"   "Z" "LN"     "ZL" "ZN" "ZLN" 
-levels(rvm_cort$treatment) <- c("C", "L", "N", "Z", "LN", "ZL", "ZN", "ZLN")
-rvm_cort$treatment <- factor(rvm_cort$treatment , levels=c("C", "L", "N", "Z", "LN", "ZL", "ZN", "ZLN"))
+treatment_levels <- c("C", "L", "N", "Z", "LN", "ZL", "ZN", "ZLN")
+#tidyverse arrange
+rvm_cort$treatment <- factor(rvm_cort$treatment , levels=treatment_levels)
+rvm_cort %>% arrange(treatment)
 levels(rvm_cort$treatment)
 # "C"   "L"   "N"   "Z"   "LN"  "ZL"  "ZN"  "ZLN"  
+# after
+ggplot(rvm_cort, aes_string(x='treatment', y='GSH_nM_mL')) +
+  geom_point() +
+  xlab("Treatment") + ylab("Concentration") + ggtitle("GSH Levels") +
+  theme_bw()
 
 # box plot on gsh levels
 g_gsh_box <- ggplot(aes(y=GSH_nM_mL, x=treatment), data=rvm_cort) + 
@@ -49,8 +61,10 @@ levels(rvm_atrazine$treatment)
 
 #update order
 # "Z"   "ZL"  "ZN" "ZLN"
-levels(rvm_atrazine$treatment) <- c("Z", "ZL", "ZN", "ZLN")
-rvm_atrazine$treatment <- factor(rvm_atrazine$treatment , levels=c("Z", "ZL", "ZN", "ZLN"))
+#tidyverse arrange
+atrazine_treatment_levels <- c("Z", "ZL", "ZN", "ZLN")
+rvm_atrazine$treatment <- factor(rvm_atrazine$treatment , levels=atrazine_treatment_levels)
+rvm_atrazine %>% arrange(treatment)
 levels(rvm_atrazine$treatment)
 # "Z"   "ZL"  "ZN"  "ZLN"  
 

@@ -90,6 +90,7 @@ ggqqplot(rvm_log_cort_drop_outliers, "logGSH", ggtheme = theme_bw()) +
 
 #################################
 #homogeneity of variance via Levene test
+colnames(rvm_cort)
 rvm_cort %>% levene_test(GSH_nM_mL ~ Z*L*N)
 rvm_log_cort_drop_outliers %>% levene_test(logGSH ~ Z*L*N) #logged data with outliers dropped
 
@@ -135,5 +136,28 @@ summary(logged_three_way_aov_drop_outliers)
 #Residuals   36  44.87   1.246                     
 #---
 #  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+tukey_test <- TukeyHSD(logged_three_way_aov_drop_outliers)
+tukey_test
+plot(tukey_test)
+
+#####extra stuff -- drop interaction data (2 and 3 way)
+rvm_cort_drop_interactions$logGSH <- log(rvm_cort_drop_interactions$GSH_nM_mL)
+#id outliers
+rvm_cort_drop_interactions %>%
+  group_by(Z, L, N) %>%
+  identify_outliers(logGSH)
+#drop outliers
+rvm_cort_more_outliers <- which(rvm_cort$ID=='C17' | rvm_cort$ID=='L16')
+rvm_cort_drop_interactions_drop_outliers <- rvm_cort_drop_interactions[-rvm_cort_more_outliers,]
+dim(rvm_cort_drop_interactions_drop_outliers)
+
+rvm_cort_drop_interactions_drop_outliers %>%
+  group_by(Z, L, N) %>%
+  get_summary_stats(logGSH, type = "mean_sd")
+
+
+logged_three_way_aov_drop_outliers_but_no_interactions <- aov(logGSH ~ Z + L + N, data = rvm_cort_drop_interactions_drop_outliers)
+summary(logged_three_way_aov_drop_outliers_but_no_interactions)
 
 

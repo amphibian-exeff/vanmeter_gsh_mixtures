@@ -1,10 +1,12 @@
 # 8 treatments with 6 samples each
 
-dim(rvm_cort)
-colnames(rvm_cort)
-unique(rvm_cort$treatment)
+rvm_cort_before_sort <- rvm_cort
 
-ggplot(rvm_cort, aes_string(x='treatment', y='GSH_nM_mL')) +
+dim(rvm_cort_before_sort)
+colnames(rvm_cort_before_sort)
+unique(rvm_cort_before_sort$treatment)
+
+ggplot(rvm_cort_before_sort, aes_string(x='treatment', y='GSH_nM_mL')) +
   geom_point() +
   xlab("Treatment") + ylab("Concentration") + ggtitle("GSH Levels") +
   theme_bw()
@@ -29,3 +31,4 @@ ggplot(rvm_alachlor, aes_string(x='treatment', y='BCF')) +
   geom_point() +
   xlab("Treatment") + ylab("Concentration") + ggtitle("Alachlor BCFs") +
   theme_bw()
+
