@@ -10,6 +10,8 @@
 # https://www.datanovia.com/en/lessons/anova-in-r/
 # three-way between-groups ANOVA
 
+#View(rvm_cort)
+
 #### GSH
 dim(rvm_cort)
 colnames(rvm_cort)
