@@ -49,6 +49,12 @@ rvm_atrazine <- read.csv(file.path(rvm_csv_in,"/atrazine_data.csv"), stringsAsFa
 rvm_alachlor <- read.csv(file.path(rvm_csv_in,"/alachlor_data.csv"), stringsAsFactors = TRUE)
 rvm_cort_drop_interactions <- read.csv(file.path(rvm_csv_in,"/gsf_data_drop_interactions.csv"), stringsAsFactors = TRUE)
 
+# get the retention time class names
+temp_rvm_abundance <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_19085_metaboanalyst.csv"), stringsAsFactors = TRUE)
+dim(temp_rvm_abundance)
+colnames(temp_rvm_abundance)
+retention_time <- as.character(temp_rvm_abundance$Sample)[2:2794]
+
 #abundance data
 rvm_abundance <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_metaboanalyst_transposed.csv"), stringsAsFactors = TRUE)
 rvm_abundance$Class
