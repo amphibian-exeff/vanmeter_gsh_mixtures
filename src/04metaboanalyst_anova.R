@@ -92,3 +92,7 @@ write.csv(export_rt_results, rvm_group_stats_file)
 colnames(export_rt_results)
 
 
+rvm_heatmap_data <- export_rt_results
+
+p <- ggplot(m3,aes(x=year,y=state,fill=count))+
+  geom_tile()

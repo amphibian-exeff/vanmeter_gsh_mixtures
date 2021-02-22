@@ -15,6 +15,7 @@ library(moments)
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
+library(RColorBrewer)
 
 print("list of loaded packages: ")
 print((.packages()))
