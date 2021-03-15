@@ -93,6 +93,7 @@ ggqqplot(rvm_log_cort_drop_outliers, "logGSH", ggtheme = theme_bw()) +
 #################################
 #homogeneity of variance via Levene test
 colnames(rvm_cort)
+
 rvm_cort %>% levene_test(GSH_nM_mL ~ Z*L*N)
 rvm_log_cort_drop_outliers %>% levene_test(logGSH ~ Z*L*N) #logged data with outliers dropped
 

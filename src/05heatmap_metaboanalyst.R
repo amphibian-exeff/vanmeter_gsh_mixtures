@@ -1,16 +1,20 @@
-colnames(export_rt_results)
+rvm_group_stats_file <- paste(rvm_data_out,"/rvm_summary_stats_table.csv",sep="")
+rt_results <- read.csv(rvm_group_stats_file)
 
-sum(export_rt_results$`significant01?`)
-sig01_rows <- which(export_rt_results$`significant01?`==TRUE)
+dim(rt_results)
+colnames(rt_results)
+
+sum(rt_results$`significant01.`)
+sig01_rows <- which(rt_results$`significant01.`==TRUE)
 
 #na all concs with not significant aov F values
-l_na_these <- which(export_rt_results$l_fvalue>0.05)
-n_na_these <- which(export_rt_results$n_fvalue>0.05)
-z_na_these <-  which(export_rt_results$z_fvalue>0.05)
-ln_na_these <- which(export_rt_results$ln_fvalue>0.05)
-zn_na_these <- which(export_rt_results$zn_fvalue>0.05)
-zl_na_these <- which(export_rt_results$zl_fvalue>0.05)
-zln_na_these <- which(export_rt_results$zln_fvalue>0.05)
+l_na_these <- which(rt_results$l_fvalue>0.05)
+n_na_these <- which(rt_results$n_fvalue>0.05)
+z_na_these <-  which(rt_results$z_fvalue>0.05)
+ln_na_these <- which(rt_results$ln_fvalue>0.05)
+zn_na_these <- which(rt_results$zn_fvalue>0.05)
+zl_na_these <- which(rt_results$zl_fvalue>0.05)
+zln_na_these <- which(rt_results$zln_fvalue>0.05)
 
 l_na_these
 n_na_these
@@ -21,19 +25,19 @@ zl_na_these
 zln_na_these
 
 #assign NAs to values for not significant F values
-export_rt_results$l_mean[l_na_these] <- NA
-export_rt_results$n_mean[n_na_these] <- NA
-export_rt_results$z_mean[z_na_these] <- NA
-export_rt_results$ln_mean[ln_na_these] <- NA
-export_rt_results$zn_mean[zn_na_these] <- NA
-export_rt_results$zl_mean[zl_na_these] <- NA
-export_rt_results$zln_mean[zln_na_these] <- NA
+rt_results$l_mean[l_na_these] <- NA
+rt_results$n_mean[n_na_these] <- NA
+rt_results$z_mean[z_na_these] <- NA
+rt_results$ln_mean[ln_na_these] <- NA
+rt_results$zn_mean[zn_na_these] <- NA
+rt_results$zl_mean[zl_na_these] <- NA
+rt_results$zln_mean[zln_na_these] <- NA
 
 # convert from wide to long format for heat map
-rvm_heatmap_data_long <- gather(export_rt_results[sig01_rows,], key=treatment, value=logabundance, c_mean:zln_mean, factor_key=TRUE)
+rvm_heatmap_data_long <- gather(rt_results[sig01_rows,], key=treatment, value=logabundance, c_mean:zln_mean, factor_key=TRUE)
 dim(rvm_heatmap_data_long)
 colnames(rvm_heatmap_data_long)
-View(rvm_heatmap_data_long)
+#View(rvm_heatmap_data_long)
 levels(rvm_heatmap_data_long$treatment)
 rvm_heatmap_data_long$logabundance
 
@@ -41,7 +45,8 @@ rvm_heatmap_data_long$logabundance
 rvm_heatmap_w_cuts <- rvm_heatmap_data_long %>%
   mutate(logfactor=cut(logabundance,breaks=c(7,8,9,10,11),
                          labels=c("7-8","8-9","9-10",">10")))
-  
+
+View(rvm_heatmap_w_cuts)  
 heatmap_jpg <- ggplot(rvm_heatmap_w_cuts,aes(x=treatment,y=retention_time,fill=logfactor))+
   geom_tile() +
   geom_tile(colour="white",size=0.25) + # add white border
@@ -51,7 +56,8 @@ heatmap_jpg <- ggplot(rvm_heatmap_w_cuts,aes(x=treatment,y=retention_time,fill=l
   scale_x_discrete(expand=c(0,0),
                  labels=c("C","N","L","LN","Z","ZN","ZL","ZLN")) +
   scale_fill_manual(values=rev(brewer.pal(4,"YlGnBu")),na.value="grey90")+
-  theme_grey(base_size=8) + # control font size
+  theme_grey(base_size=8) 
+#+ # control font size
   theme(
     #bold font for legend text
     legend.text=element_text(face="bold"),

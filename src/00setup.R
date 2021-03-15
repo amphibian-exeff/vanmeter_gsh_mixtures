@@ -16,6 +16,12 @@ library(tidyverse)
 library(ggpubr)
 library(rstatix)
 library(RColorBrewer)
+library(gt)
+library(gridExtra)
+library(patchwork)
+library(webshot)
+#webshot::install_phantomjs()
+
 
 print("list of loaded packages: ")
 print((.packages()))
@@ -72,4 +78,4 @@ class(rvm_cort$treatment)
 levels(rvm_cort$treatment)
 
 dim(rvm_cort)
-View(rvm_cort)
+#View(rvm_cort)
