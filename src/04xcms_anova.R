@@ -1,7 +1,7 @@
 dim(rvm_abundance_xcms)
 #View(rvm_abundance_xcms)
 
-xcms_ncols <- ncol(rvm_abundance_xcms)
+xcms_ncols <- ncol(rvm_abundance_xcms)-4
 
 #2758, 15
 rt_results_xcms <- data.frame(matrix(nrow = xcms_ncols, ncol = 19))
@@ -12,7 +12,8 @@ colnames(rt_results_xcms) <- rt_colnames
 
 
 for(i in 5:xcms_ncols){
-  temp_aov <- bind_cols(rvm_abundance_xcms$Class, rvm_abundance_xcms$Z, rvm_abundance_xcms$L, rvm_abundance_xcms$N, log(rvm_abundance_xcms[,i]),
+  temp_aov <- bind_cols(rvm_abundance_xcms$Class, rvm_abundance_xcms$Z, rvm_abundance_xcms$L, 
+                        rvm_abundance_xcms$N, log(rvm_abundance_xcms[,i]),
                           .name_repair = c("unique")
   )
   colnames(temp_aov) <- c("treatment", "Z", "L", "N", "log_abundance_xcms")
@@ -80,13 +81,13 @@ for(i in 5:xcms_ncols){
   }
 }
 
-sum(rt_results_xcms$`significant05?`)
-sum(rt_results_xcms$`significant01?`)
-sum(rt_results_xcms$`main_significant05?`)
-sum(rt_results_xcms$`main_significant01?`)
+sum(rt_results_xcms$`significant05?`[1:2956])
+sum(rt_results_xcms$`significant01?`[1:2956])
+sum(rt_results_xcms$`main_significant05?`[1:2956])
+sum(rt_results_xcms$`main_significant01?`[1:2956])
 
 View(rt_results_xcms)
-export_rt_results_xcms <- cbind(retention_time, rt_results_xcms)
+export_rt_results_xcms <- cbind(retention_time, rt_results_xcms[1:2956,])
 View(export_rt_results_xcms)
 
 rvm_group_stats_file <- paste(rvm_data_out,"/rvm_summary_stats_table_xcms.csv",sep="")

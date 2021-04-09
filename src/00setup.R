@@ -60,13 +60,13 @@ rvm_cort_drop_interactions <- read.csv(file.path(rvm_csv_in,"/gsf_data_drop_inte
 temp_rvm_abundance_metaboanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_19085_metaboanalyst.csv"), stringsAsFactors = TRUE)
 dim(temp_rvm_abundance_metaboanalyst)
 colnames(temp_rvm_abundance_metaboanalyst)
-#retention_time <- as.character(temp_rvm_abundance_metaboanalyst$Sample)[2:2794]
+retention_time_metaboanalyst <- as.character(temp_rvm_abundance_metaboanalyst$Sample)[2:2794]
 
 # get the retention time class names--xcms
 temp_rvm_abundance_xcms <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_19085_xcms.csv"), stringsAsFactors = TRUE)
 dim(temp_rvm_abundance_xcms)
 colnames(temp_rvm_abundance_xcms)
-retention_time <- as.character(temp_rvm_abundance_xcms$Sample)[2:2957]
+retention_time_xcms <- as.character(temp_rvm_abundance_xcms$Sample)[2:2957]
 
 #abundance data
 rvm_abundance_metabonanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_metaboanalyst_transposed.csv"), stringsAsFactors = TRUE)
