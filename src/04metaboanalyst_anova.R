@@ -1,11 +1,14 @@
-dim(rvm_abundance)
+## this was not used for the final analysis, xcms instead!!!!
+
+dim(rvm_abundance_metabonanalyst)
+#View(rvm_abundance_metabonanalyst)
 
 #2793, 15
-rt_results <- df <- data.frame(matrix(nrow = 2793, ncol = 19))
+rt_results_metaboanalyst <- data.frame(matrix(nrow = 2793, ncol = 19))
 rt_colnames <- c("c_mean", "n_mean", "l_mean", "ln_mean", "z_mean", "zn_mean", "zl_mean", "zln_mean",
        "z_fvalue", "l_fvalue", "n_fvalue", "zl_fvalue", "zn_fvalue", "ln_fvalue", "zln_fvalue", 
        "significant05?", "significant01?", "main_significant05?", "main_significant01?")
-colnames(rt_results) <- rt_colnames
+colnames(rt_results_metaboanalyst) <- rt_colnames
 
 
 for(i in 5:2797){
