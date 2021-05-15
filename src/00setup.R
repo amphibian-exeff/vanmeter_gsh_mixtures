@@ -56,7 +56,7 @@ rvm_atrazine <- read.csv(file.path(rvm_csv_in,"/atrazine_data.csv"), stringsAsFa
 rvm_alachlor <- read.csv(file.path(rvm_csv_in,"/alachlor_data.csv"), stringsAsFactors = TRUE)
 rvm_cort_drop_interactions <- read.csv(file.path(rvm_csv_in,"/gsf_data_drop_interactions.csv"), stringsAsFactors = TRUE)
 
-# get the retention time class names--metabonalyst (dropped)
+# get the retention time class names--metaboanalyst (dropped)
 temp_rvm_abundance_metaboanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_19085_metaboanalyst.csv"), stringsAsFactors = TRUE)
 dim(temp_rvm_abundance_metaboanalyst)
 colnames(temp_rvm_abundance_metaboanalyst)
@@ -68,13 +68,24 @@ dim(temp_rvm_abundance_xcms)
 colnames(temp_rvm_abundance_xcms)
 retention_time_xcms <- as.character(temp_rvm_abundance_xcms$Sample)[2:2957]
 
+#save w sample names
+#View(temp_rvm_abundance_xcms)
+nrow(temp_rvm_abundance_xcms)
+rvm_abundance_xcms_sample_names <- temp_rvm_abundance_xcms[2:2957,]
+
 #abundance data
-rvm_abundance_metabonanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_metaboanalyst_transposed.csv"), stringsAsFactors = TRUE)
-rvm_abundance_metabonanalyst$Class
+rvm_abundance_metaboanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_metaboanalyst_transposed.csv"), stringsAsFactors = TRUE)
+rvm_abundance_metaboanalyst$Class
 
 #abundance data
 rvm_abundance_xcms <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_xcms_transposed.csv"), stringsAsFactors = TRUE)
+dim(rvm_abundance_xcms)
 rvm_abundance_xcms$Class
+View(rvm_abundance_xcms)
+
+#spectra data
+rvm_peak_resolution_xcms <- read.csv(file.path(rvm_csv_in,"/rvm_summary_stats_table_xcms_peak ID_v233.12_peak resolution.csv"), stringsAsFactors = TRUE)
+dim(rvm_peak_resolution_xcms)
 
 
 summary(rvm_cort)

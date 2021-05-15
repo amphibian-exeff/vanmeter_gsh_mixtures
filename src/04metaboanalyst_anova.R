@@ -1,6 +1,6 @@
 ## this was not used for the final analysis, xcms instead!!!!
 
-dim(rvm_abundance_metabonanalyst)
+dim(rvm_abundance_metaboanalyst)
 #View(rvm_abundance_metabonanalyst)
 
 #2793, 15
