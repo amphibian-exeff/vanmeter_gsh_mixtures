@@ -66,12 +66,34 @@ retention_time_metaboanalyst <- as.character(temp_rvm_abundance_metaboanalyst$Sa
 temp_rvm_abundance_xcms <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_19085_xcms.csv"), stringsAsFactors = TRUE)
 dim(temp_rvm_abundance_xcms)
 colnames(temp_rvm_abundance_xcms)
-retention_time_xcms <- as.character(temp_rvm_abundance_xcms$Sample)[2:2957]
+retention_time_xcms <- as.numeric(temp_rvm_abundance_xcms$Sample[2:2957])
 
 #save w sample names
 #View(temp_rvm_abundance_xcms)
 nrow(temp_rvm_abundance_xcms)
 rvm_abundance_xcms_sample_names <- temp_rvm_abundance_xcms[2:2957,]
+summary(rvm_abundance_xcms_sample_names)
+#factor so integer
+typeof(rvm_abundance_xcms_sample_names$Sample)
+rvm_abundance_xcms_sample_names$Sample <- type.convert(rvm_abundance_xcms_sample_names$Sample)
+dim(rvm_abundance_xcms_sample_names)
+
+#fix bin numbers
+rvm_bin_v_rt <- read.csv(file.path(rvm_csv_in,"/bin_v_rtmed.csv"), stringsAsFactors = TRUE)
+colnames(rvm_bin_v_rt)
+colnames(rvm_abundance_xcms_sample_names)
+rvm_abundance_xcms_sample_names$Sample
+min(rvm_abundance_xcms_sample_names$Sample)
+max(rvm_abundance_xcms_sample_names$Sample)
+rvm_bin_v_rt$rtmed
+min(rvm_bin_v_rt$rtmed)
+max(rvm_bin_v_rt$rtmed)
+dim(rvm_abundance_xcms_sample_names)
+dim(rvm_bin_v_rt)
+rvm_abundance_xcms_sample_names$bin <- 1:2956
+rvm_abundance_xcms_sample_names <- merge(rvm_abundance_xcms_sample_names, rvm_bin_v_rt, by = "bin")
+dim(rvm_abundance_xcms_sample_names)
+#View(rvm_abundance_xcms_sample_names)
 
 #abundance data
 rvm_abundance_metaboanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_metaboanalyst_transposed.csv"), stringsAsFactors = TRUE)
@@ -81,7 +103,7 @@ rvm_abundance_metaboanalyst$Class
 rvm_abundance_xcms <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_xcms_transposed.csv"), stringsAsFactors = TRUE)
 dim(rvm_abundance_xcms)
 rvm_abundance_xcms$Class
-View(rvm_abundance_xcms)
+#View(rvm_abundance_xcms)
 
 #spectra data
 rvm_peak_resolution_xcms <- read.csv(file.path(rvm_csv_in,"/rvm_summary_stats_table_xcms_peak ID_v233.12_peak resolution.csv"), stringsAsFactors = TRUE)

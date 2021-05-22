@@ -16,13 +16,17 @@ id_list_lengths
 
 #View(rvm_abundance_xcms_sample_names)
 dim(rvm_abundance_xcms_sample_names)
-rvm_abundance_xcms_sample_names$X <- 1:2956
 colnames(rvm_abundance_xcms_sample_names)
   
 #merge ided list with abundance on X
 #right outer join
-merged_ided_abundance <- merge(x =rvm_abundance_xcms_sample_names, y = id_results, by = "X", all.y = TRUE)
+#View(id_results)
+#View(rvm_abundance_xcms_sample_names)
+dim(id_results)
+merged_ided_abundance <- merge(x =rvm_abundance_xcms_sample_names, y = id_results, by.x = "bin", by.y = "X", all.y = TRUE)
 dim(merged_ided_abundance)
+#View(merged_ided_abundance)
+
 #convert retention time and abundances from factor to numeric
 #lost some precision!
 for(i in 2:48){
@@ -42,18 +46,19 @@ par(mfrow=c(1,1))
     id_begin <- id_end + 1
     counter <- counter + 1
     #only run if more than one element
-    if(length(get_rows)>1){
+    if(length(get_rows)>2){
       ### print the abundances
       id_abundance_subset <- merged_ided_abundance[get_rows,]
       #View(id_abundance_subset)
       #summary(id_abundance_subset)
-      control_plot <- ggplot(id_abundance_subset, aes(x=X), color = "black") + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = CON.13, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = CON.14, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = CON.15, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = CON.16, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = CON.17, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = CON.18, x=Sample),size=1.1, se=F) +
+      brew_colors <- brewer.pal(n = 8, name = "Greys")
+      control_plot <- ggplot(id_abundance_subset, aes(x=Sample)) + 
+        geom_line(aes(y = CON.13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = CON.14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = CON.15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = CON.16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = CON.17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = CON.18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": Control")) +
         xlab("retention time") +
@@ -63,13 +68,14 @@ par(mfrow=c(1,1))
                              axis.text.x=element_blank(),
                              axis.ticks.x=element_blank())
       
-      l_plot <- ggplot(id_abundance_subset, aes(x=X), color = "blue2") + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = L.13, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = L.14, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = L.15, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = L.16, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = L.17, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = L.18, x=Sample),size=1.1, se=F) +
+      brew_colors <- brewer.pal(n = 8, name = "Blues")
+      l_plot <- ggplot(id_abundance_subset, aes(x=Sample)) + 
+        geom_line(aes(y = L.13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = L.14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = L.15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = L.16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = L.17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = L.18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": L")) +
         xlab("retention time") +
@@ -79,13 +85,14 @@ par(mfrow=c(1,1))
               axis.text.x=element_blank(),
               axis.ticks.x=element_blank())
       
-      n_plot <- ggplot(id_abundance_subset, aes(x=X), color = "darkred") + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = N.13, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = N.14, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = N.15, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = N.16, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = N.17, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = N.18, x=Sample),size=1.1, se=F) +
+      brew_colors <- brewer.pal(n = 8, name = "Reds")
+      n_plot <- ggplot(id_abundance_subset, aes(x=X)) + 
+        geom_line(aes(y = N.13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = N.14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = N.15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = N.16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = N.17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = N.18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": N")) +
         xlab("retention time") +
@@ -95,13 +102,14 @@ par(mfrow=c(1,1))
               axis.text.x=element_blank(),
               axis.ticks.x=element_blank())
       
-      z_plot <- ggplot(id_abundance_subset, aes(x=X), color = "darkgreen") + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = Z.13, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = Z.14, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = Z.15, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = Z.16, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = Z.17, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = Z.18, x=Sample),size=1.1, se=F) +
+      brew_colors <- brewer.pal(n = 8, name = "Greens")
+      z_plot <- ggplot(id_abundance_subset, aes(x=X)) + 
+        geom_line(aes(y = Z.13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = Z.14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = Z.15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = Z.16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = Z.17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = Z.18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": Z")) +
         xlab("retention time") +
@@ -111,13 +119,14 @@ par(mfrow=c(1,1))
               axis.text.x=element_blank(),
               axis.ticks.x=element_blank())      
       
+      brew_colors <- brewer.pal(n = 8, name = "Purples")
       ln_plot <- ggplot(id_abundance_subset, aes(x=X), color = "chartreuse2") + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = LN.13, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = LN.14, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = LN.15, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = LN.16, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = LN.17, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = LN.18, x=Sample),size=1.1, se=F) +
+        geom_line(aes(y = LN.13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = LN.14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = LN.15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = LN.16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = LN.17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = LN.18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": LN")) +
         xlab("retention time") +
@@ -127,11 +136,12 @@ par(mfrow=c(1,1))
               axis.text.x=element_blank(),
               axis.ticks.x=element_blank())
       
-      zl_plot <- ggplot(id_abundance_subset, aes(x=X), color = "cornflowerblue") + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZL.15, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZL.16, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZL.17, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZL.18, x=Sample),size=1.1, se=F) +
+      brew_colors <- brewer.pal(n = 8, name = "PuBu")
+      zl_plot <- ggplot(id_abundance_subset, aes(x=X)) + 
+        geom_line(aes(y = ZL.15, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = ZL.16, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = ZL.17, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = ZL.18, x=Sample),size=1.1, color = brew_colors[7]) +
         labs(title = id) +
         ggtitle(paste(id, ": ZL")) +
         xlab("retention time") +
@@ -141,13 +151,14 @@ par(mfrow=c(1,1))
               axis.text.x=element_blank(),
               axis.ticks.x=element_blank())
       
+      brew_colors <- brewer.pal(n = 8, name = "YlOrBr")
       zn_plot <- ggplot(id_abundance_subset, aes(x=X), color = "darkgoldenrod2") + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZN.13, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZN.14, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZN.15, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZN.16, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZN.17, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZN.18, x=Sample),size=1.1, se=F) +
+        geom_line(aes(y = ZN.13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = ZN.14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = ZN.15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = ZN.16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = ZN.17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = ZN.18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": ZN")) +
         xlab("retention time") +
@@ -157,13 +168,14 @@ par(mfrow=c(1,1))
               axis.text.x=element_blank(),
               axis.ticks.x=element_blank())
       
+      brew_colors <- brewer.pal(n = 8, name = "BuPu")
       zln_plot <- ggplot(id_abundance_subset, aes(x=X), color = "darkmagenta") + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZLN.13, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZLN.14, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZLN.15, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZLN.16, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZLN.17, x=Sample),size=1.1, se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ZLN.18, x=Sample),size=1.1, se=F) +
+        geom_line(aes(y = ZLN.13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = ZLN.14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = ZLN.15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = ZLN.16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = ZLN.17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = ZLN.18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": ZLN")) +
         xlab("retention time") +
@@ -172,18 +184,19 @@ par(mfrow=c(1,1))
       
       ###plot the mean log abundances
       id_results_subset <- id_results[get_rows,]
+      id_results_subset$retention_time <- id_abundance_subset$Sample
       #View(id_results_subset)
       #plotting X instead of retention_time because not enough precision in retention_time
       rt_plot <- ggplot(id_results_subset, aes(x=X)) + 
         #ggtitle("title") +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = c_mean, x=X, color = "c_mean"),size=1.5, se=F) + 
-        geom_smooth(method='loess', formula = y ~ x, aes(y = n_mean, x=X, color="n_mean"), se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = l_mean, x=X, color="l_mean"), se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = z_mean, x=X, color="z_mean"), se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = ln_mean, x=X, color="ln_mean"), se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = zn_mean, x=X, color="zn_mean"), se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = zl_mean, x=X, color="zl_mean"), se=F) +
-        geom_smooth(method='loess', formula = y ~ x, aes(y = zln_mean, x=X, color="zln_mean"), se=F) +
+        geom_smooth(method='loess', formula = y ~ x, aes(y = c_mean, x=retention_time, color = "c_mean"), size=1.5, se=F) + 
+        geom_smooth(method='loess', formula = y ~ x, aes(y = n_mean, x=retention_time, color="n_mean"), se=F) +
+        geom_smooth(method='loess', formula = y ~ x, aes(y = l_mean, x=retention_time, color="l_mean"), se=F) +
+        geom_smooth(method='loess', formula = y ~ x, aes(y = z_mean, x=retention_time, color="z_mean"), se=F) +
+        geom_smooth(method='loess', formula = y ~ x, aes(y = ln_mean, x=retention_time, color="ln_mean"), se=F) +
+        geom_smooth(method='loess', formula = y ~ x, aes(y = zn_mean, x=retention_time, color="zn_mean"), se=F) +
+        geom_smooth(method='loess', formula = y ~ x, aes(y = zl_mean, x=retention_time, color="zl_mean"), se=F) +
+        geom_smooth(method='loess', formula = y ~ x, aes(y = zln_mean, x=retention_time, color="zln_mean"), se=F) +
         scale_color_manual(values = c(
                   "c_mean" = "black", 
                   "n_mean"="darkred", 
@@ -194,15 +207,20 @@ par(mfrow=c(1,1))
                   "zl_mean"="cornflowerblue", 
                   "zln_mean"="darkmagenta")) +
         labs(title = id) +
-        xlab("bin (not retention time)") +
-        ylab("abundance") +
+        xlab("retention time)") +
+        ylab("log(abundance)") +
         #ggtitle(id) #+
-        theme_classic()
+        theme_classic() +
+        theme(legend.position = "bottom")
       
       #plot(rt_plot)
       #ggsave(filename = paste(rvm_graphics, "/rt_", id, "_image.png", sep=""))
       
       colnames(id_results_subset)
+      colnames(id_abundance_subset)
+      dim(id_results_subset)
+      dim(id_abundance_subset)
+      id_results_subset$retention_time <- id_abundance_subset$Sample
       rt_table <- id_results_subset %>%
         dplyr::select(-ID, -c_mean, -n_mean, -l_mean, -ln_mean, -z_mean,
                       -zn_mean, -zl_mean, -zln_mean,
