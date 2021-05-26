@@ -57,25 +57,36 @@ rvm_alachlor <- read.csv(file.path(rvm_csv_in,"/alachlor_data.csv"), stringsAsFa
 rvm_cort_drop_interactions <- read.csv(file.path(rvm_csv_in,"/gsf_data_drop_interactions.csv"), stringsAsFactors = TRUE)
 
 # get the retention time class names--metaboanalyst (dropped)
-temp_rvm_abundance_metaboanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_19085_metaboanalyst.csv"), stringsAsFactors = TRUE)
-dim(temp_rvm_abundance_metaboanalyst)
-colnames(temp_rvm_abundance_metaboanalyst)
-retention_time_metaboanalyst <- as.character(temp_rvm_abundance_metaboanalyst$Sample)[2:2794]
+#temp_rvm_abundance_metaboanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_19085_metaboanalyst.csv"), stringsAsFactors = TRUE)
+#dim(temp_rvm_abundance_metaboanalyst)
+#View(temp_rvm_abundance_metaboanalyst)
+#colnames(temp_rvm_abundance_metaboanalyst)
+#retention_time_metaboanalyst <- as.character(temp_rvm_abundance_metaboanalyst$Sample)[2:2794]
 
 # get the retention time class names--xcms
-temp_rvm_abundance_xcms <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_19085_xcms.csv"), stringsAsFactors = TRUE)
+xcms_filename <- file.path(rvm_csv_in,"/rjvm_livers_19085_xcms.csv")
+temp_rvm_abundance_xcms <- read.csv(xcms_filename, header=TRUE, colClasses = "numeric")
+str(temp_rvm_abundance_xcms)
+head(temp_rvm_abundance_xcms)
 dim(temp_rvm_abundance_xcms)
 colnames(temp_rvm_abundance_xcms)
-retention_time_xcms <- as.numeric(temp_rvm_abundance_xcms$Sample[2:2957])
+retention_time_xcms <- as.numeric(temp_rvm_abundance_xcms$Sample)
+retention_time_xcms
+
+#only the retention times
+#View(retention_time_xcms)
 
 #save w sample names
 #View(temp_rvm_abundance_xcms)
-nrow(temp_rvm_abundance_xcms)
-rvm_abundance_xcms_sample_names <- temp_rvm_abundance_xcms[2:2957,]
+dim(temp_rvm_abundance_xcms)
+rvm_abundance_xcms_sample_names <- temp_rvm_abundance_xcms
+dim(rvm_abundance_xcms_sample_names)
+#problem here
+View(rvm_abundance_xcms_sample_names)
+#as.matrix(rvm_abundance_xcms_sample_names)
 summary(rvm_abundance_xcms_sample_names)
 #factor so integer
-typeof(rvm_abundance_xcms_sample_names$Sample)
-rvm_abundance_xcms_sample_names$Sample <- type.convert(rvm_abundance_xcms_sample_names$Sample)
+#typeof(rvm_abundance_xcms_sample_names$Sample)
 dim(rvm_abundance_xcms_sample_names)
 
 #fix bin numbers
@@ -96,8 +107,8 @@ dim(rvm_abundance_xcms_sample_names)
 #View(rvm_abundance_xcms_sample_names)
 
 #abundance data
-rvm_abundance_metaboanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_metaboanalyst_transposed.csv"), stringsAsFactors = TRUE)
-rvm_abundance_metaboanalyst$Class
+#rvm_abundance_metaboanalyst <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_metaboanalyst_transposed.csv"), stringsAsFactors = TRUE)
+#rvm_abundance_metaboanalyst$Class
 
 #abundance data
 rvm_abundance_xcms <- read.csv(file.path(rvm_csv_in,"/rjvm_livers_xcms_transposed.csv"), stringsAsFactors = TRUE)

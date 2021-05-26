@@ -29,9 +29,10 @@ dim(merged_ided_abundance)
 
 #convert retention time and abundances from factor to numeric
 #lost some precision!
-for(i in 2:48){
-  merged_ided_abundance[,i] <- as.numeric(merged_ided_abundance[,i])
-}
+#col
+#for(i in 2:48){
+#  merged_ided_abundance[,i] <- as.numeric(merged_ided_abundance[,i])
+#}
 summary(merged_ided_abundance)
 
 rt_pdf_filename <- paste(rvm_graphics,"/rvm_rt_v_abundance_significant_ids_xcms.pdf",sep="")
@@ -53,12 +54,12 @@ par(mfrow=c(1,1))
       #summary(id_abundance_subset)
       brew_colors <- brewer.pal(n = 8, name = "Greys")
       control_plot <- ggplot(id_abundance_subset, aes(x=Sample)) + 
-        geom_line(aes(y = CON.13, x=Sample),size=1.1, color = brew_colors[3]) +
-        geom_line(aes(y = CON.14, x=Sample),size=1.1, color = brew_colors[4]) +
-        geom_line(aes(y = CON.15, x=Sample),size=1.1, color = brew_colors[5]) +
-        geom_line(aes(y = CON.16, x=Sample),size=1.1, color = brew_colors[6]) +
-        geom_line(aes(y = CON.17, x=Sample),size=1.1, color = brew_colors[7]) +
-        geom_line(aes(y = CON.18, x=Sample),size=1.1, color = brew_colors[8]) +
+        geom_line(aes(y = CON13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = CON14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = CON15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = CON16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = CON17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = CON18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": Control")) +
         xlab("retention time") +
@@ -70,12 +71,12 @@ par(mfrow=c(1,1))
       
       brew_colors <- brewer.pal(n = 8, name = "Blues")
       l_plot <- ggplot(id_abundance_subset, aes(x=Sample)) + 
-        geom_line(aes(y = L.13, x=Sample),size=1.1, color = brew_colors[3]) +
-        geom_line(aes(y = L.14, x=Sample),size=1.1, color = brew_colors[4]) +
-        geom_line(aes(y = L.15, x=Sample),size=1.1, color = brew_colors[5]) +
-        geom_line(aes(y = L.16, x=Sample),size=1.1, color = brew_colors[6]) +
-        geom_line(aes(y = L.17, x=Sample),size=1.1, color = brew_colors[7]) +
-        geom_line(aes(y = L.18, x=Sample),size=1.1, color = brew_colors[8]) +
+        geom_line(aes(y = L13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = L14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = L15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = L16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = L17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = L18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": L")) +
         xlab("retention time") +
@@ -87,12 +88,12 @@ par(mfrow=c(1,1))
       
       brew_colors <- brewer.pal(n = 8, name = "Reds")
       n_plot <- ggplot(id_abundance_subset, aes(x=X)) + 
-        geom_line(aes(y = N.13, x=Sample),size=1.1, color = brew_colors[3]) +
-        geom_line(aes(y = N.14, x=Sample),size=1.1, color = brew_colors[4]) +
-        geom_line(aes(y = N.15, x=Sample),size=1.1, color = brew_colors[5]) +
-        geom_line(aes(y = N.16, x=Sample),size=1.1, color = brew_colors[6]) +
-        geom_line(aes(y = N.17, x=Sample),size=1.1, color = brew_colors[7]) +
-        geom_line(aes(y = N.18, x=Sample),size=1.1, color = brew_colors[8]) +
+        geom_line(aes(y = N13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = N14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = N15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = N16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = N17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = N18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": N")) +
         xlab("retention time") +
@@ -104,12 +105,12 @@ par(mfrow=c(1,1))
       
       brew_colors <- brewer.pal(n = 8, name = "Greens")
       z_plot <- ggplot(id_abundance_subset, aes(x=X)) + 
-        geom_line(aes(y = Z.13, x=Sample),size=1.1, color = brew_colors[3]) +
-        geom_line(aes(y = Z.14, x=Sample),size=1.1, color = brew_colors[4]) +
-        geom_line(aes(y = Z.15, x=Sample),size=1.1, color = brew_colors[5]) +
-        geom_line(aes(y = Z.16, x=Sample),size=1.1, color = brew_colors[6]) +
-        geom_line(aes(y = Z.17, x=Sample),size=1.1, color = brew_colors[7]) +
-        geom_line(aes(y = Z.18, x=Sample),size=1.1, color = brew_colors[8]) +
+        geom_line(aes(y = Z13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = Z14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = Z15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = Z16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = Z17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = Z18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": Z")) +
         xlab("retention time") +
@@ -121,12 +122,12 @@ par(mfrow=c(1,1))
       
       brew_colors <- brewer.pal(n = 8, name = "Purples")
       ln_plot <- ggplot(id_abundance_subset, aes(x=X), color = "chartreuse2") + 
-        geom_line(aes(y = LN.13, x=Sample),size=1.1, color = brew_colors[3]) +
-        geom_line(aes(y = LN.14, x=Sample),size=1.1, color = brew_colors[4]) +
-        geom_line(aes(y = LN.15, x=Sample),size=1.1, color = brew_colors[5]) +
-        geom_line(aes(y = LN.16, x=Sample),size=1.1, color = brew_colors[6]) +
-        geom_line(aes(y = LN.17, x=Sample),size=1.1, color = brew_colors[7]) +
-        geom_line(aes(y = LN.18, x=Sample),size=1.1, color = brew_colors[8]) +
+        geom_line(aes(y = LN13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = LN14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = LN15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = LN16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = LN17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = LN18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": LN")) +
         xlab("retention time") +
@@ -138,10 +139,10 @@ par(mfrow=c(1,1))
       
       brew_colors <- brewer.pal(n = 8, name = "PuBu")
       zl_plot <- ggplot(id_abundance_subset, aes(x=X)) + 
-        geom_line(aes(y = ZL.15, x=Sample),size=1.1, color = brew_colors[4]) +
-        geom_line(aes(y = ZL.16, x=Sample),size=1.1, color = brew_colors[5]) +
-        geom_line(aes(y = ZL.17, x=Sample),size=1.1, color = brew_colors[6]) +
-        geom_line(aes(y = ZL.18, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = ZL15, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = ZL16, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = ZL17, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = ZL18, x=Sample),size=1.1, color = brew_colors[7]) +
         labs(title = id) +
         ggtitle(paste(id, ": ZL")) +
         xlab("retention time") +
@@ -153,12 +154,12 @@ par(mfrow=c(1,1))
       
       brew_colors <- brewer.pal(n = 8, name = "YlOrBr")
       zn_plot <- ggplot(id_abundance_subset, aes(x=X), color = "darkgoldenrod2") + 
-        geom_line(aes(y = ZN.13, x=Sample),size=1.1, color = brew_colors[3]) +
-        geom_line(aes(y = ZN.14, x=Sample),size=1.1, color = brew_colors[4]) +
-        geom_line(aes(y = ZN.15, x=Sample),size=1.1, color = brew_colors[5]) +
-        geom_line(aes(y = ZN.16, x=Sample),size=1.1, color = brew_colors[6]) +
-        geom_line(aes(y = ZN.17, x=Sample),size=1.1, color = brew_colors[7]) +
-        geom_line(aes(y = ZN.18, x=Sample),size=1.1, color = brew_colors[8]) +
+        geom_line(aes(y = ZN13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = ZN14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = ZN15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = ZN16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = ZN17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = ZN18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": ZN")) +
         xlab("retention time") +
@@ -170,12 +171,12 @@ par(mfrow=c(1,1))
       
       brew_colors <- brewer.pal(n = 8, name = "BuPu")
       zln_plot <- ggplot(id_abundance_subset, aes(x=X), color = "darkmagenta") + 
-        geom_line(aes(y = ZLN.13, x=Sample),size=1.1, color = brew_colors[3]) +
-        geom_line(aes(y = ZLN.14, x=Sample),size=1.1, color = brew_colors[4]) +
-        geom_line(aes(y = ZLN.15, x=Sample),size=1.1, color = brew_colors[5]) +
-        geom_line(aes(y = ZLN.16, x=Sample),size=1.1, color = brew_colors[6]) +
-        geom_line(aes(y = ZLN.17, x=Sample),size=1.1, color = brew_colors[7]) +
-        geom_line(aes(y = ZLN.18, x=Sample),size=1.1, color = brew_colors[8]) +
+        geom_line(aes(y = ZLN13, x=Sample),size=1.1, color = brew_colors[3]) +
+        geom_line(aes(y = ZLN14, x=Sample),size=1.1, color = brew_colors[4]) +
+        geom_line(aes(y = ZLN15, x=Sample),size=1.1, color = brew_colors[5]) +
+        geom_line(aes(y = ZLN16, x=Sample),size=1.1, color = brew_colors[6]) +
+        geom_line(aes(y = ZLN17, x=Sample),size=1.1, color = brew_colors[7]) +
+        geom_line(aes(y = ZLN18, x=Sample),size=1.1, color = brew_colors[8]) +
         labs(title = id) +
         ggtitle(paste(id, ": ZLN")) +
         xlab("retention time") +
