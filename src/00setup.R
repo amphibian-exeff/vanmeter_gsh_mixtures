@@ -1,7 +1,11 @@
-#Install and load supporting libraries.
-print(Sys.info()[4])
-
 R.Version()$version.string
+citation()
+citation("stats")
+print(Sys.info()[4])
+citation("MASS")
+citation('rstatix')
+
+#Install and load supporting libraries.
 library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 library(knitr, quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2)
@@ -52,6 +56,7 @@ print(paste("check to see if R can access alachlor file OK: ", boo))
 
 #cleaned up data set, manually reshaped, long format
 rvm_cort <- read.csv(file.path(rvm_csv_in,"/gsf_data.csv"), stringsAsFactors = TRUE)
+dim(rvm_cort)
 rvm_atrazine <- read.csv(file.path(rvm_csv_in,"/atrazine_data.csv"), stringsAsFactors = TRUE)
 rvm_alachlor <- read.csv(file.path(rvm_csv_in,"/alachlor_data.csv"), stringsAsFactors = TRUE)
 rvm_cort_drop_interactions <- read.csv(file.path(rvm_csv_in,"/gsf_data_drop_interactions.csv"), stringsAsFactors = TRUE)
@@ -82,7 +87,7 @@ dim(temp_rvm_abundance_xcms)
 rvm_abundance_xcms_sample_names <- temp_rvm_abundance_xcms
 dim(rvm_abundance_xcms_sample_names)
 #problem here
-View(rvm_abundance_xcms_sample_names)
+#View(rvm_abundance_xcms_sample_names)
 #as.matrix(rvm_abundance_xcms_sample_names)
 summary(rvm_abundance_xcms_sample_names)
 #factor so integer
@@ -134,3 +139,4 @@ levels(rvm_cort$treatment)
 
 dim(rvm_cort)
 #View(rvm_cort)
+

@@ -13,7 +13,7 @@ ggplot(rvm_cort_before_sort, aes_string(x='treatment', y='GSH_nM_mL')) +
   theme_bw()
 #update order
 # "C"   "L"   "N"   "Z" "LN"     "ZL" "ZN" "ZLN" 
-treatment_levels <- c("C", "L", "N", "Z", "LN", "ZL", "ZN", "ZLN")
+treatment_levels <- c("C", "Z", "L", "N", "ZL", "ZN", "LN", "ZLN")
 #tidyverse arrange
 rvm_cort$treatment <- factor(rvm_cort$treatment , levels=treatment_levels)
 rvm_cort %>% arrange(treatment)
@@ -92,7 +92,11 @@ levels(rvm_alachlor$treatment)
 # "C"   "L"   "LN"  "N"   "Z"   "ZL"  "ZLN" "ZN"
 
 #order does not need to be updated
- 
+alachlor_treatment_levels <- c("L", "ZL", "LN", "ZLN")
+rvm_alachlor$treatment <- factor(rvm_alachlor$treatment , levels=alachlor_treatment_levels)
+rvm_alachlor %>% arrange(treatment)
+levels(rvm_alachlor$treatment)
+
 # box plot on gsh levels
 g_alachlor_box <- ggplot(aes(y=BCF, x=treatment), data=rvm_alachlor) + 
   geom_boxplot(fill="red4") + 

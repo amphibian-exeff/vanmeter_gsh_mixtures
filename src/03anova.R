@@ -16,6 +16,10 @@
 dim(rvm_cort)
 colnames(rvm_cort)
 summary(rvm_cort)
+View(rvm_cort)
+
+levels(rvm_cort$treatment)
+# "C"   "L"   "LN"  "N"   "Z"   "ZL"  "ZLN" "ZN"
 
 rvm_cort %>%
   group_by(Z, L, N) %>%
@@ -139,6 +143,41 @@ summary(logged_three_way_aov_drop_outliers)
 #Residuals   36  44.87   1.246                     
 #---
 #  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+# aov gives same resutls as anova of the lm
+anova(lm(logGSH ~ Z * L * N, data = rvm_log_cort_drop_outliers))
+#Analysis of Variance Table
+#Response: logGSH
+#Df Sum Sq Mean Sq F value    Pr(>F)    
+#Z          1  5.962  5.9619  4.7837 0.0353080 *  
+#  L          1  0.014  0.0139  0.0111 0.9165576    
+#N          1 22.988 22.9878 18.4450 0.0001265 ***
+#  Z:L        1 13.896 13.8957 11.1497 0.0019647 ** 
+#  Z:N        1  4.023  4.0233  3.2282 0.0807735 .  
+#L:N        1  4.027  4.0267  3.2309 0.0806513 .  
+#Z:L:N      1  0.314  0.3144  0.2523 0.6185353    
+#Residuals 36 44.866  1.2463                      
+#---
+#  Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+## however, this is the anova from statix
+# results are similar but F values are a bit different
+rvm_log_cort_drop_outliers %>% anova_test(logGSH ~ Z * L * N)
+#ANOVA Table (type II tests)
+#Effect DFn DFd         F        p p<.05      ges
+#1      Z   1  36  3.681000 6.30e-02       9.30e-02
+#2      L   1  36  0.000213 9.88e-01       5.92e-06
+#3      N   1  36 19.731000 8.15e-05     * 3.54e-01
+#4    Z:L   1  36 11.653000 2.00e-03     * 2.45e-01
+#5    Z:N   1  36  3.522000 6.90e-02       8.90e-02
+#6    L:N   1  36  3.231000 8.10e-02       8.20e-02
+#7  Z:L:N   1  36  0.252000 6.19e-01       7.00e-03
+
+# summary stats for the logged sdata with 4 outliers dropped
+rvm_log_cort_drop_outliers %>%
+  group_by(Z, L, N) %>%
+  get_summary_stats(GSH_nM_mL, type = "mean_sd")
+
 
 tukey_test <- TukeyHSD(logged_three_way_aov_drop_outliers)
 tukey_test
