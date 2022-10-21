@@ -1,5 +1,5 @@
 # vanmeter_gsh_mixtures repository
-Van Meter RJ, Glinski DA, Purucker ST, Henderson WM. Induced hepatic glutathione and metabolomic alterations following mixed pesticide and fertilizer exposures in juvenile leopard frogs (Lithobates sphenocephala)
+Van Meter, R.J., Glinski, D.A., Purucker, S.T. and Henderson, W.M., 2022. Induced Hepatic Glutathione and Metabolomic Alterations Following Mixed Pesticide and Fertilizer Exposures in Juvenile Leopard Frogs (Lithobates sphenocephala). Environmental Toxicology and Chemistry, 41(1), pp.122-133.
 
 https://setac.onlinelibrary.wiley.com/doi/full/10.1002/etc.5245
 
